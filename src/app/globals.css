@@ -27,3 +27,7 @@ body {
   line-height: 1.35;
   font-family: Work Sans;
 }
+
+input:-webkit-autofill {
+  transition: background-color 50000s ease-in-out, color 50000s ease-in-out;
+}
