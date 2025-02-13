@@ -21,8 +21,8 @@ export const TextInput: React.FC<TextInputProps> = ({
 }) => {
   const [value, setValue] = useState<string>("");
   const [state, setState] = useState<States>({
-    filled: false,
-    valid: value ? true : false,
+    filled: value ? true : false,
+    valid: true,
     focused: false,
   });
 
@@ -46,7 +46,7 @@ export const TextInput: React.FC<TextInputProps> = ({
   return (
     <div
       className={`
-        relative w-full rounded-lg transition-border duration-200
+        relative w-full rounded-lg transition-border
         border-solid border-2
         ${state.valid === false ? "border-[#FF0000]" : ""}
         ${
@@ -59,7 +59,7 @@ export const TextInput: React.FC<TextInputProps> = ({
       `}
     >
       <label
-        className={`absolute font-medium transition-all duration-200 ${
+        className={`absolute font-medium transition-all ${
           state.valid === false
             ? "text-[#FF0000]"
             : state.filled && state.focused
