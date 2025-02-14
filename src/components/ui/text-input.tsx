@@ -48,10 +48,11 @@ export const TextInput: React.FC<TextInputProps> = ({
       className={`
         relative w-full rounded-lg transition-border
         border-solid border-2
-        ${state.valid === false ? "border-[#FF0000]" : ""}
         ${
           state.filled && state.focused
             ? "border-[#1E90FF]"
+            : state.valid == false
+            ? "border-[#FF0000]"
             : "border-[#5B415B1A]"
         }
         bg-white
@@ -60,10 +61,10 @@ export const TextInput: React.FC<TextInputProps> = ({
     >
       <label
         className={`absolute font-medium transition-all ${
-          state.valid === false
-            ? "text-[#FF0000]"
-            : state.filled && state.focused
+          state.filled && state.focused
             ? "text-[#1E90FF]"
+            : state.valid === false
+            ? "text-[#FF0000]"
             : "text-[#6F5883]"
         } left-5 ${state.filled ? "text-xs top-1" : "text-base top-3"}`}
       >
