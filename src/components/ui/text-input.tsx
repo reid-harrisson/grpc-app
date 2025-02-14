@@ -8,38 +8,36 @@ interface TextInputProps {
   className?: string;
 }
 
-interface States {
-  filled: boolean;
-  valid: boolean;
-  focused: boolean;
-}
-
 export const TextInput: React.FC<TextInputProps> = ({
   label,
   className,
   name,
 }) => {
   const [value, setValue] = useState<string>("");
-  const [state, setState] = useState<States>({
-    filled: value ? true : false,
-    valid: true,
-    focused: false,
+  const [state, setState] = useState<{
+    isFilled: boolean;
+    isValid: boolean;
+    isFocused: boolean;
+  }>({
+    isFilled: value ? true : false,
+    isValid: true,
+    isFocused: false,
   });
 
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     setState({
-      valid: event.target.value == "invalid" ? false : true,
-      filled: event.target.value ? true : false,
-      focused: false,
+      isValid: event.target.value == "invalid" ? false : true,
+      isFilled: !!event.target.value,
+      isFocused: false,
     });
   };
 
   const handleFocus = () => {
-    setState({ ...state, focused: true, filled: true });
+    setState({ ...state, isFocused: true, isFilled: true });
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setState({ ...state, filled: true });
+    setState({ ...state, isFilled: true });
     setValue(event.target.value);
   };
 
@@ -49,9 +47,9 @@ export const TextInput: React.FC<TextInputProps> = ({
         relative w-full rounded-lg transition-border
         border-solid border-2
         ${
-          state.filled && state.focused
+          state.isFilled && state.isFocused
             ? "border-[#1E90FF]"
-            : state.valid == false
+            : state.isValid == false
             ? "border-[#FF0000]"
             : "border-[#5B415B1A]"
         }
@@ -61,12 +59,12 @@ export const TextInput: React.FC<TextInputProps> = ({
     >
       <label
         className={`absolute font-medium transition-all ${
-          state.filled && state.focused
+          state.isFilled && state.isFocused
             ? "text-[#1E90FF]"
-            : state.valid === false
+            : state.isValid === false
             ? "text-[#FF0000]"
             : "text-[#6F5883]"
-        } left-5 ${state.filled ? "text-xs top-1" : "text-base top-3"}`}
+        } left-5 ${state.isFilled ? "text-xs top-1" : "text-base top-3"}`}
       >
         {label}
       </label>
